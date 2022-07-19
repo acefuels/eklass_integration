@@ -154,14 +154,12 @@ async function getSDKToken(userId) {
         },
     });
     console.log(res);
-    const token = res.data.data.sdk_token;
-    const exprire = res.data.data.expires_in;
     cookies.setItem(
         `sdkToken-${userId}`,
-        token,
-        new Date(new Date().getTime() + (exprire - 60 * 60 * 3) * 1000),
+        res.sdkToken,
+        new Date(new Date().getTime() + (res.expiresIn - 60 * 60 * 3) * 1000),
     );
-    return token;
+    return res.sdkToken;
 }
 
 function getPid(classType, env, lowDelayStatus) {
